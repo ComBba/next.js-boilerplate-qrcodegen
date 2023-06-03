@@ -39,7 +39,7 @@ export default function Home() {
         </button>
         {filename && (
           <div className="mt-4">
-            <Image src={`/images/${filename}`} alt="Generated QR Code" width={200} height={200} />
+            <Image src={filename} alt="Generated QR Code" width={200} height={200} />
           </div>
         )}
       </div>
