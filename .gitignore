@@ -33,5 +33,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-package-lock.json
+
+# etc
 public/images/*.png
+package-lock.json
