@@ -41,7 +41,7 @@ This is a web application that takes a URL from the user and generates a QR code
 
 ## How to Test
 
-This project is tested using Jest. To run the tests, execute the following command in the project root:
+1. This project is tested using Jest. To run the tests, execute the following command in the project root:
 
     ```bash
     npm run test
