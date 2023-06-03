@@ -12,8 +12,6 @@ export default async function handler(req, res) {
 
     const client = await dbConnect();
     const collection = client.db(process.env.MONGODB_DATABASE_NAME).collection(process.env.MONGODB_COLLECTION_NAME);
-    console.log('[process.env.MONGODB_DATABASE_NAME]', process.env.MONGODB_DATABASE_NAME);
-    console.log('[process.env.MONGODB_COLLECTION_NAME]', process.env.MONGODB_COLLECTION_NAME);
     const { url } = req.body;
 
     try {
