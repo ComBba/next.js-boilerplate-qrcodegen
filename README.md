@@ -12,8 +12,9 @@ This is a web application that takes a URL from the user and generates a QR code
 
 3. Create a `.env.local` file in the project root and set the following environment variables:
     ```js
-    MONGODB_URI=mongodb://localhost:27017/mydatabase
-    DB_COLLECTION=qrcodes
+    MONGODB_CONNECTION_URI=mongodb://localhost:27017/
+    MONGODB_DATABASE_NAME=databasename
+    MONGODB_COLLECTION_NAME=collectionname
     ```
     - `MONGODB_URI`: The MongoDB connection string. If MongoDB is running locally, you can use the above value (`mongodb://localhost:27017/mydatabase`). If you are using a remote MongoDB, use the corresponding connection string.
     - `DB_COLLECTION`: The name of the collection in MongoDB.
@@ -23,11 +24,13 @@ This is a web application that takes a URL from the user and generates a QR code
 ## How to Run
 
 1. In the project root, run the following command to install dependencies:
+
     ```bash
     npm install
     ```
 
 2. Run the following command to start the development server:
+
     ```bash
     npm run dev
     ```
@@ -39,6 +42,7 @@ This is a web application that takes a URL from the user and generates a QR code
 ## How to Test
 
 This project is tested using Jest. To run the tests, execute the following command in the project root:
+
     ```bash
     npm run test
     ```
