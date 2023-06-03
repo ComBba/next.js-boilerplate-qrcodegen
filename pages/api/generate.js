@@ -31,7 +31,7 @@ export default async function handler(req, res) {
         // Create a hash of the URL
         const hash = crypto.createHash('sha256');
         hash.update(url);
-        const filename = `${hash.digest('hex')}.png`;
+        const filename = `${hash.digest('hex')}`;
 
         // Generate the QR code
         const qrCodeDataUrl = await QRCode.toDataURL(url);
