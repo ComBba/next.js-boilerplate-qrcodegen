@@ -53,11 +53,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    const loadData = async () => {
-      await fetchHistory();
-    };
-
-    loadData();
+    fetchHistory();
   }, [page, pageSize]);
 
   return (
