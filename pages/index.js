@@ -1,3 +1,4 @@
+// pages/index.js
 import { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import Image from 'next/image';
@@ -8,17 +9,20 @@ export default function Home() {
   const [history, setHistory] = useState([]);
   const [totalRows, setTotalRows] = useState(0);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(5);
 
   const columns = [
     {
       name: 'URL',
       selector: 'url',
       sortable: true,
+      cell: row => <a href={row.url} target="_blank" rel="noreferrer">{row.url}</a>,
+      width: '450px',
+      //grow: 2,  // This makes the URL column wider
     },
     {
       name: 'QR Code',
-      cell: row => <Image src={row.filename} alt="Generated QR Code" width={100} height={100} />,
+      cell: row => <Image src={row.filename} alt="Generated QR Code" width={50} height={50} />,  // Reduced image size
     },
   ];
 
@@ -83,11 +87,10 @@ export default function Home() {
           columns={columns}
           data={history}
           pagination
-          responsive
+          //responsive
           defaultSortField="url"
           paginationServer
           paginationPerPage={pageSize}
-          //paginationTotalRows={history.length}
           paginationTotalRows={totalRows}
           onChangePage={page => setPage(page)}
           onChangeRowsPerPage={(currentRowsPerPage, currentPage) => {
