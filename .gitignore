@@ -37,3 +37,4 @@ next-env.d.ts
 # etc
 public/images/*.png
 package-lock.json
+yarn.lock
