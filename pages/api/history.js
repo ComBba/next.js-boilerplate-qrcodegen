@@ -16,6 +16,7 @@ export default async function handler(req, res) {
         const qrHistory = await collection.find({})
             .skip((page - 1) * pageSize)
             .limit(pageSize)
+            .sort({ _id: -1 })
             .toArray();
         const total = await collection.countDocuments();
         return res.status(200).json({ qrHistory, page, pageSize, total });

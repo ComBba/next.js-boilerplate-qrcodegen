@@ -1,5 +1,5 @@
 // pages/index.js
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import DataTable from 'react-data-table-component';
 import Image from 'next/image';
 
@@ -41,7 +41,7 @@ export default function Home() {
     }
   }
 
-  const fetchHistory = async () => {
+  const fetchHistory = useCallback(async () => {
     try {
       const res = await fetch(`/api/history?page=${page}&pageSize=${pageSize}`);
       const data = await res.json();
@@ -50,11 +50,15 @@ export default function Home() {
     } catch (err) {
       console.error(err);
     }
-  }
+  }, [page, pageSize]);
 
   useEffect(() => {
-    fetchHistory();
-  }, [page, pageSize]);
+    const loadData = async () => {
+      await fetchHistory();
+    };
+
+    loadData();
+  }, [fetchHistory]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
