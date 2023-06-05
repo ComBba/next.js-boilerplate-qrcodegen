@@ -1,10 +1,26 @@
-// pages/index.js
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import DataTable from 'react-data-table-component';
 import Image from 'next/image';
 
 export default function Home() {
   const [url, setUrl] = useState('');
   const [filename, setFilename] = useState('');
+  const [history, setHistory] = useState([]);
+  const [totalRows, setTotalRows] = useState(0);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
+  const columns = [
+    {
+      name: 'URL',
+      selector: 'url',
+      sortable: true,
+    },
+    {
+      name: 'QR Code',
+      cell: row => <Image src={row.filename} alt="Generated QR Code" width={100} height={100} />,
+    },
+  ];
 
   const generateQR = async () => {
     try {
@@ -15,10 +31,30 @@ export default function Home() {
       });
       const { filename } = await res.json();
       setFilename(filename);
+      await fetchHistory();
     } catch (err) {
       console.error(err);
     }
   }
+
+  const fetchHistory = async () => {
+    try {
+      const res = await fetch(`/api/history?page=${page}&pageSize=${pageSize}`);
+      const data = await res.json();
+      setHistory(data.qrHistory);
+      setTotalRows(data.total);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  useEffect(() => {
+    const loadData = async () => {
+      await fetchHistory();
+    };
+
+    loadData();
+  }, [page, pageSize]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
@@ -42,6 +78,23 @@ export default function Home() {
             <Image src={filename} alt="Generated QR Code" width={200} height={200} />
           </div>
         )}
+        <h2 className="mt-4 mb-2 text-xl">History</h2>
+        <DataTable
+          columns={columns}
+          data={history}
+          pagination
+          responsive
+          defaultSortField="url"
+          paginationServer
+          paginationPerPage={pageSize}
+          //paginationTotalRows={history.length}
+          paginationTotalRows={totalRows}
+          onChangePage={page => setPage(page)}
+          onChangeRowsPerPage={(currentRowsPerPage, currentPage) => {
+            setPageSize(currentRowsPerPage);
+            setPage(currentPage);
+          }}
+        />
       </div>
     </div>
   );
